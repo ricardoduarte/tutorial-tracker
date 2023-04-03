@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/tutorials_page.dart';
 import 'models/pillar.dart';
+import 'widgets/pillar_widget.dart';
 
 void main() {
   runApp(const Application());
@@ -25,15 +26,11 @@ class _ApplicationState extends State<Application> {
         appBar: AppBar(
           title: const Text('Tutorial Tracker'),
         ),
-        body: ValueListenableBuilder(
-          valueListenable: pillarData,
-          builder: (context, value, child) {
-            return TutorialsPage(
-              pillar: pillarData,
-            );
-          }
+        body: PillarStatefulWidget(
+          pillarData: pillarData,
+          child: const TutorialsPage(),
+          ),
         ),
-      ),
     );
   }
 }
