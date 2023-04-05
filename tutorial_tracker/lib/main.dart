@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'pages/tutorials_page.dart';
 import 'models/pillar.dart';
-import 'widgets/pillar_widget.dart';
+import 'models/domain.dart';
 
 void main() {
   runApp(const Application());
@@ -15,8 +16,6 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-  final pillarData = Pillar(type: PillarType.flutter, articleCount: 115);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,11 +25,24 @@ class _ApplicationState extends State<Application> {
         appBar: AppBar(
           title: const Text('Tutorial Tracker'),
         ),
-        body: PillarStatefulWidget(
-          pillarData: pillarData,
-          child: const TutorialsPage(),
-          ),
-        ),
+        body: MultiProvider(providers: [
+          ChangeNotifierProvider<Flutter>(
+              create: (context) => Flutter(Pillar(
+                    type: PillarType.flutter,
+                    articleCount: 115,
+                  ))),
+          ChangeNotifierProvider<Android>(
+              create: (context) => Android(Pillar(
+                    type: PillarType.android,
+                    articleCount: 282,
+                  ))),
+          ChangeNotifierProvider<Swift>(
+              create: (context) => Swift(Pillar(
+                    type: PillarType.ios,
+                    articleCount: 608,
+                  ))),
+        ], child: const TutorialsPage()),
+      ),
     );
   }
 }

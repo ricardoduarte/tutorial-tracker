@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Pillar {
-  var _articleCount = 0;
+class Pillar extends ChangeNotifier {
   int get articleCount => _articleCount;
+  int _articleCount = 0;
   var active = true;
   final PillarType type;
 
@@ -12,6 +12,7 @@ class Pillar {
 
   void increaseArticleCount({int by = 1}) {
     _articleCount += by;
+    notifyListeners();
   }
 }
 
